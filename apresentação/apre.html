@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Apresentação</title>
+<style>
+:root{
+  --bg:#0f1418;
+  --card:#121417;
+  --muted:#9aa4a8;
+  --accent:#1db954;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, 'Helvetica Neue', Arial;color:#e6eef0;background:linear-gradient(180deg,var(--bg),#061216);}
+.app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:1fr 92px;height:100vh;gap:16px;padding:20px}
+
+/* SIDEBAR */
+.sidebar{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:1px}
+.brand .logo{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#24c27a);display:flex;justify-content:center;align-items:center;color:#052016;font-weight:800}
+nav a{display:flex;align-items:center;gap:12px;padding:8px;border-radius:8px;color:var(--muted);text-decoration:none}
+nav a:hover{background:var(--glass);color:#fff}
+.playlists{overflow:auto;padding-top:6px}
+.playlist-item{display:block;color:var(--muted);padding:6px 8px;border-radius:6px;text-decoration:none}
+.playlist-item:hover{color:#fff;background:rgba(255,255,255,0.02)}
+
+/* MAIN */
+.main{display:flex;flex-direction:column;gap:18px;padding:10px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.search{flex:1;display:flex;gap:12px;align-items:center;background:var(--card);padding:8px;border-radius:999px;max-width:720px}
+.search input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:6px}
+.profile{display:flex;gap:12px;align-items:center}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#334455,#223344);display:inline-block;cursor:pointer}
+
+/* HERO */
+.hero{display:flex;align-items:flex-end;gap:18px;padding:18px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
+.cover{width:140px;height:140px;border-radius:8px;background:linear-gradient(135deg,#2b2f36,#1a1f24);display:flex;align-items:center;justify-content:center;font-weight:700;overflow:hidden;transition:background-image 0.5s ease-in-out, transform 0.3s ease;}
+.cover img{width:100%;height:100%;object-fit:cover;border-radius:8px;opacity:0;transition:opacity 0.5s ease-in-out;}
+
+.hero-info h1{margin:0;font-size:20px}
+.hero-info p{margin:6px 0;color:var(--muted)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));padding:12px;border-radius:10px;transition:transform .2s ease}
+.card:hover{transform:scale(1.03)}
+.thumb{width:100%;height:120px;border-radius:8px;background:linear-gradient(135deg,#3a3f47,#24303b);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;position:relative;}
+.thumb img{width:100%;height:100%;object-fit:cover;border-radius:8px;transition:transform .3s ease, opacity .3s ease;}
+.thumb img:hover{transform:scale(1.05);opacity:0.9;}
+.card h4{margin:8px 0 0 0;font-size:14px}
+.card p{margin:6px 0 0 0;color:var(--muted);font-size:13px}
+
+/* PLAYER BAR */
+.player{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:rgba(0,0,0,0.3);border-radius:12px}
+.player-left{display:flex;align-items:center;gap:12px}
+.player-controls{display:flex;flex-direction:column;gap:8px;align-items:center}
+.controls{display:flex;gap:12px;align-items:center}
+.btn{width:36px;height:36px;border-radius:50%;display:inline-grid;place-items:center;background:transparent;border:0;color:#fff;cursor:pointer}
+.play{width:44px;height:44px;border-radius:999px;background:var(--accent);color:#052016;display:inline-grid;place-items:center;font-weight:700}
+.progress{width:520px;height:6px;border-radius:8px;background:rgba(255,255,255,0.06)}
+.progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#2bd67a);border-radius:8px}
+
+/* LOGIN */
+.login-box {position: absolute;top:60px;right:20px;background: var(--card);border: 1px solid rgba(255,255,255,0.08);border-radius: 10px;padding: 16px;width: 220px;box-shadow: 0 4px 20px rgba(0,0,0,0.4);display: none;flex-direction: column;gap: 8px;z-index: 200;}
+.login-box input {background: rgba(255,255,255,0.08);border: none;border-radius: 6px;padding: 8px;color: #fff;font-size: 14px;}
+.login-box button {background: var(--accent);color: #052016;border: none;padding: 8px;border-radius: 6px;cursor: pointer;font-weight: 600;}
+.login-box button:hover {background: #22c06b;}
+.profile-btn{display:flex;align-items:center;gap:8px;background:transparent;border:none;color:#fff;cursor:pointer;font-weight:600;padding:4px 8px;border-radius:999px;}
+.profile-btn:hover{background: rgba(255,255,255,0.05);}
+.profile-name{display:inline-block;}
+@media (max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:1fr 92px}.sidebar{display:none}.player{padding:12px}.progress{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">S</div><div>Portfólio 2025</div></div>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Pesquisar</a>
+      <a href="#">Sua Biblioteca</a>
+    </nav>
+    <div style="border-top:1px solid rgba(255,255,255,0.02);padding-top:10px">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Playlists</div>
+      <div class="playlists">
+        <a class="playlist-item" href="#">Identificação Pessoal</a>
+        <a class="playlist-item" href="#">Objetivos</a>
+        <a class="playlist-item" href="#">PPE</a>
+        <a class="playlist-item" href="#">Plano de Vida</a>
+        <a class="playlist-item" href="#">História de Vida</a>
+      </div>
+    </div>
+    <div style="margin-top:auto;color:var(--muted);font-size:13px">Feito com ♥ — Soundly</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/></svg>
+        <input id="searchInput" placeholder="Pesquisar áreas do conhecimento..." />
+      </div>
+      <div class="profile">
+        <button class="profile-btn">
+          <div class="avatar"></div>
+          <span class="profile-name"></span>
+        </button>
+      </div>
+      <div class="login-box" id="loginBox">
+        <input type="text" id="loginUser" placeholder="Usuário">
+        <input type="password" id="loginPass" placeholder="Senha">
+        <button id="loginConfirm">Entrar</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="cover">PLAY</div>
+      <div class="hero-info">
+        <p style="font-size:12px;color:var(--muted);margin:0">Perfil do usuário • Lucas Bezerra de Sousa</p>
+        <h1>Meu Portfólio</h1>
+        <p>Uma seleção das principais faixas para você.</p>
+      </div>
+    </section>
+
+    <section>
+      <h3 style="margin:0 0 8px 0">Áreas do Conhecimento</h3>
+      <div class="grid" id="cardsGrid">
+        <div class="card">
+          <div class="thumb"><img src="C:\Users\USER\Desktop\Lucas programação\apresentação\imgs\linguagens.jpg" alt="Linguagens"></div>
+          <h4>Linguagens</h4>
+          <p>Literatura, Português, Inglês</p>
+        </div>
+        <div class="card">
+          <div class="thumb"><img src="C:\Users\USER\Desktop\Lucas programação\apresentação\imgs\humanas.webp" alt="Humanas"></div>
+          <h4>Humanas</h4>
+          <p>História & Geografia</p>
+        </div>
+        <div class="card">
+          <div class="thumb"><img src="C:\Users\USER\Desktop\Lucas programação\apresentação\imgs\Natureza.webp" alt="Natureza"></div>
+          <h4>Natureza</h4>
+          <p>Química, Física e Biologia</p>
+        </div>
+        <div class="card">
+          <div class="thumb"><img src="C:\Users\USER\Desktop\Lucas programação\apresentação\imgs\Matemática.png" alt="Matemática"></div>
+          <h4>Matemática</h4>
+          <p>Análise combinatória, Probabilidade</p>
+        </div>
+        <div class="card">
+          <div class="thumb"><img src="C:\Users\USER\Desktop\Lucas programação\apresentação\imgs\tecnologia.jpg" alt="Senai"></div>
+          <h4>Senai</h4>
+          <p>Informática para Internet</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="player">
+    <div class="player-left">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#2b2f36,#1a1f24);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700">A</div>
+      <div>
+        <div style="font-weight:700">Nome da Faixa</div>
+        <div style="color:var(--muted);font-size:13px">Artista</div>
+      </div>
+    </div>
+
+    <div class="player-controls">
+      <div class="controls">
+        <button class="btn">↩</button>
+        <button class="btn">⏮</button>
+        <button class="play">►</button>
+        <button class="btn">⏭</button>
+        <button class="btn">🔁</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="currentTime" style="font-size:12px;color:var(--muted)">0:00</div>
+        <div class="progress" id="progressBar"><i></i></div>
+        <div id="totalTime" style="font-size:12px;color:var(--muted)">13:00</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="btn">🔊</button>
+      <div style="width:110px;height:6px;border-radius:8px;background:rgba(255,255,255,0.06)"><i style="display:block;height:100%;width:60%;background:linear-gradient(90deg,var(--accent),#2bd67a);border-radius:8px"></i></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Login
+const avatar = document.querySelector('.avatar');
+const loginBox = document.getElementById('loginBox');
+const loginBtn = document.getElementById('loginConfirm');
+const userInput = document.getElementById('loginUser');
+const passInput = document.getElementById('loginPass');
+const nameSpan = document.querySelector('.profile-name');
+const cover = document.querySelector('.cover');
+
+avatar.addEventListener('click', (e) => {
+  e.stopPropagation();
+  loginBox.style.display = loginBox.style.display === 'flex' ? 'none' : 'flex';
+});
+document.addEventListener('click', (e) => {
+  if (!loginBox.contains(e.target) && !avatar.contains(e.target)) {
+    loginBox.style.display = 'none';
+  }
+});
+
+loginBtn.addEventListener('click', () => {
+  const user = userInput.value.trim();
+  const pass = passInput.value.trim();
+
+  if(user==="Lucas" && pass==="1234"){
+    const profileImg = "https://i.pravatar.cc/300?u=" + user;
+    avatar.style.backgroundImage = `url('${profileImg}')`;
+    avatar.style.backgroundSize = "cover";
+    avatar.style.backgroundPosition = "center";
+    cover.style.backgroundImage = `url('${profileImg}')`;
+    cover.style.backgroundSize = "cover";
+    cover.style.backgroundPosition = "center";
+    cover.textContent = "";
+    nameSpan.textContent = user;
+    loginBox.style.display = "none";
+  } else {
+    alert("Usuário ou senha incorretos!");
+  }
+});
+
+// Cards selection
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.card').forEach(x=>x.style.outline='');
+    c.style.outline='2px solid rgba(29,185,84,0.12)';
+  })
+});
+
+// Search
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.card');
+searchInput.addEventListener('input', () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  cards.forEach(card => {
+    const texto = card.innerText.toLowerCase();
+    card.style.display = texto.includes(termo) ? 'block' : 'none';
+  });
+});
+</script>
+
+
+<script>
+// Player funcional 13 min
+const playBtn = document.querySelector('.play');
+const progressBarContainer = document.getElementById('progressBar');
+const progressBar = progressBarContainer.querySelector('i');
+const currentTimeDisplay = document.getElementById('currentTime');
+
+let isPlaying = false;
+let currentSeconds = 0;
+const totalSeconds = 13*60; // 13 minutos
+let intervalId;
+
+function formatTime(sec){
+  const minutes = Math.floor(sec/60);
+  const seconds = sec%60;
+  return `${minutes}:${seconds.toString().padStart(2,'0')}`;
+}
+
+function updateProgress(){
+  currentSeconds++;
+  if(currentSeconds >= totalSeconds){
+    clearInterval(intervalId);
+    isPlaying = false;
+    playBtn.textContent = '►';
+    currentSeconds = totalSeconds;
+  }
+  currentTimeDisplay.textContent = formatTime(currentSeconds);
+  const percent = (currentSeconds / totalSeconds) * 100;
+  progressBar.style.width = percent + '%';
+}
+
+// Play / Pause
+playBtn.addEventListener('click', ()=>{
+  if(!isPlaying){
+    isPlaying = true;
+    playBtn.textContent='▌▌';
+    intervalId = setInterval(updateProgress,1000);
+  } else {
+    isPlaying = false;
+    playBtn.textContent='►';
+    clearInterval(intervalId);
+  }
+});
+
+// Avançar 10 segundos
+document.querySelector('.btn:nth-child(4)').addEventListener('click', ()=>{
+  currentSeconds += 10;
+  if(currentSeconds > totalSeconds) currentSeconds = totalSeconds;
+  currentTimeDisplay.textContent = formatTime(currentSeconds);
+  progressBar.style.width = (currentSeconds/totalSeconds)*100+'%';
+});
+
+// Voltar 10 segundos
+document.querySelector('.btn:nth-child(2)').addEventListener('click', ()=>{
+  currentSeconds -= 10;
+  if(currentSeconds < 0) currentSeconds = 0;
+  currentTimeDisplay.textContent = formatTime(currentSeconds);
+  progressBar.style.width = (currentSeconds/totalSeconds)*100+'%';
+});
+
+// Barra clicável para mudar tempo
+progressBarContainer.parentElement.addEventListener('click', (e)=>{
+  const rect = progressBarContainer.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const width = rect.width;
+  const percent = clickX / width;
+  currentSeconds = Math.floor(totalSeconds * percent);
+  progressBar.style.width = (percent*100)+'%';
+  currentTimeDisplay.textContent = formatTime(currentSeconds);
+});
+</script>
+
+</body>
+</html>
